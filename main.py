@@ -6,6 +6,9 @@ import asyncio
 import os
 import json
 import sys
+import random
+from urllib.parse import urlparse
+
 
 sys.path.append('.')
 from user_info import User_info
@@ -49,6 +52,8 @@ csv_file = None
 cache_data = None
 down_log = False
 autoSync = False
+delay_min = 3
+delay_max = 5
 
 md_file = None
 md_output = True
@@ -87,6 +92,10 @@ with open('settings.json', 'r', encoding='utf8') as f:
         has_video = True
     if settings['log_output']:
         log_output = True
+    if settings['delay_min']:
+        delay_min = settings['delay_min']
+    if settings['delay_max']:
+        delay_max = settings['delay_max']
     if settings['max_concurrent_requests']:
         max_concurrent_requests = settings['max_concurrent_requests']
     else:
@@ -348,6 +357,9 @@ def download_control(_user_info):
                     async with semaphore:
                         async with httpx.AsyncClient(proxy=proxies) as client:
                             global down_count
+                            sleep_time = random.uniform(delay_min, delay_max)
+                            #print(f"다음 요청 전 {sleep_time:.2f}초 대기 중...")
+                            time.sleep(sleep_time)
                             response = await client.get(quote_url(url), timeout=(3.05, 16))        #如果出现第五次或以上的下载失败,且确认不是网络问题,可以适当降低最大并发数量
                             if response.status_code == 404:
                                 raise Exception('404')
@@ -358,7 +370,8 @@ def download_control(_user_info):
                     csv_file.data_input(csv_info)
 
                     if log_output:
-                        print(f'{_file_name}=====>下载完成')
+                        t = time.strftime('%Y-%m-%dT%H:%M:%S')
+                        print(f'{t} : {_file_name}=====>下载完成')
 
                     break
                 except Exception as e:
