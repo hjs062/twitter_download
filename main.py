@@ -23,11 +23,11 @@ def del_special_char(string):
 
 def stamp2time(msecs_stamp:int) -> str:
     timeArray = time.localtime(msecs_stamp/1000)
-    otherStyleTime = time.strftime("%Y-%m-%d %H-%M", timeArray)
+    otherStyleTime = time.strftime("%Y%m%d_%H%M%S", timeArray)
     return otherStyleTime
 
 def time2stamp(timestr:str) -> int:
-    datetime_obj = datetime.strptime(timestr, "%Y-%m-%d")
+    datetime_obj = datetime.strptime(timestr, "%Y%m%d_%H%M%S")
     msecs_stamp = int(time.mktime(datetime_obj.timetuple()) * 1000.0 + datetime_obj.microsecond / 1000.0)
     return msecs_stamp
 
@@ -331,15 +331,19 @@ def get_download_url(_user_info):
 def download_control(_user_info):
     async def _main():
         async def down_save(url, prefix, csv_info, order: int):
+            path = urlparse(url).path  # '/files/images/photo.jpg'
+            filename = os.path.basename(path)  # 'photo.jpg'
+
             if '.mp4' in url:
-                _file_name = f'{_user_info.save_path + os.sep}{prefix}_{_user_info.count + order}.mp4'
+                _file_name = f'{_user_info.save_path + os.sep}{_user_info.screen_name}_{prefix}_{filename}'
             else:
                 try:
                     if orig_format:
                         url += f'?name=orig'
-                        _file_name = f'{_user_info.save_path + os.sep}{prefix}_{_user_info.count + order}.{csv_info[5][-3:]}' # 根据图片 url 获取原始格式
+                        #_file_name = f'{_user_info.save_path + os.sep}{prefix}_{_user_info.count + order}.{csv_info[5][-3:]}' # 根据图片 url 获取原始格式
+                        _file_name = f'{_user_info.save_path + os.sep}{_user_info.screen_name}_{prefix}_{filename}' # 根据图片 url 获取原始格式
                     else: # 指定格式时，先使用 name=orig，404 则切回 name=4096x4096，以保证最大尺寸
-                        _file_name = f'{_user_info.save_path + os.sep}{prefix}_{_user_info.count + order}.{img_format}'
+                        _file_name = f'{_user_info.save_path + os.sep}{_user_info.screen_name}_{prefix}_{filename}'
                         if img_format != 'png':
                             url += f'?format=jpg&name=4096x4096'
                         else:
@@ -430,13 +434,13 @@ def main(_user_info: object):
         files = sorted(os.listdir(_user_info.save_path))
         if len(files) > 0:
             global start_time_stamp
-            re_rule = r'\d{4}-\d{2}-\d{2}'
+            re_rule = r"\d{8}_\d{6}"
             for i in files[::-1]:
                 if "-img_" in i:
-                    start_time_stamp = time2stamp(re.findall(re_rule, i)[0])
+                    start_time_stamp = time2stamp(re.findall(re_rule, i)[0]) + 1
                     break
                 elif "-vid_" in i:
-                    start_time_stamp = time2stamp(re.findall(re_rule, i)[0])
+                    start_time_stamp = time2stamp(re.findall(re_rule, i)[0]) + 1
                     break
                 else:
                     start_time_stamp = backup_stamp

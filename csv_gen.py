@@ -22,7 +22,7 @@ class csv_gen():
 
     def stamp2time(self, msecs_stamp:int) -> str:
         timeArray = time.localtime(msecs_stamp/1000)
-        otherStyleTime = time.strftime("%Y-%m-%d %H:%M", timeArray)
+        otherStyleTime = time.strftime("%Y%m%d_%H%M%S", timeArray)
         return otherStyleTime
     
     def data_input(self, main_par_info:list) -> None:   #数据格式参见 main_par
