@@ -1,5 +1,5 @@
 {
-    "save_path": "C:\\projects\\twitter_download_storage",
+    "save_path": "/home/hjs/projects/twitter_download_storage",
     "save_path_info": "就算是windows路径也请用 '/' ,而不是反斜杠(可以留空)",
 
     "user_lst": "LucyKashoa",
