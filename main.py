@@ -139,6 +139,7 @@ def get_other_info(_user_info):
     try:
         global request_count
         response = httpx.get(quote_url(url), headers=_headers, proxy=proxies).text
+        print(response[:200])   # 디버깅용으로 삽입함.
         request_count += 1
         raw_data = json.loads(response)
         _user_info.rest_id = raw_data['data']['user']['result']['rest_id']
@@ -468,7 +469,9 @@ def main(_user_info: object):
 
     if down_log:
         del cache_data
-    print(f'{_user_info.name}下载完成\n\n')
+    t0 = time.strftime('%Y-%m-%dT%H:%M:%S')
+    print(f'{t0} : {_user_info.name} 다운로드 완료. 5초간 휴식\n\n')
+    time.sleep(5)
 
 if __name__=='__main__':
     _start = time.time()
