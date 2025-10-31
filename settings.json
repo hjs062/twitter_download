@@ -5,7 +5,7 @@
     "user_lst": "LucyKashoa",
     "user_lst_info": "填入要下载的用户名(@后面的字符),支持多用户下载,用户名字间逗号(英文逗号,不要有空格)隔开",
 
-    "cookie": "auth_token=35191cbd6a9f1f62bf431cf2fd3f9b5a89b2b0e6; ct0=29035fe3324bb557f4598b732bfd67ccd11e5ccf263141544eb8be975557819443392b5ffafc0747a127cb8114d5adb94654f4dee2dc16c6465b7a96fb87e379b844651c3423a34625b681c09232511a;",
+    "cookie": "auth_token=35191cbd6a9f1f62bf431cf2fd3f9b5a89b2b0e6; ct0=5dae3625a0b4fd83d8f05e796143f562b763ce5f57f9c5d39bbb4c9ef9e0adc411b839f17cc5c5286694ab832178fb0af7a6e9c21c0a2c1e3ca78325df74e4be3b948f87334734b4906f53ae029533ac;",
     "cookie_info": "填入 cookie (auth_token与ct0字段) //重要:替换掉其中的x即可, 注意不要删掉分号",
 
 
