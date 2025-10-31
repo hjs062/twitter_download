@@ -2,7 +2,7 @@
     "save_path": "/home/hjs/projects/twitter_download_storage",
     "save_path_info": "就算是windows路径也请用 '/' ,而不是反斜杠(可以留空)",
 
-    "user_lst": "LucyKashoa",
+    "user_lst": "___lunakim___,_jiujiujiujiu,_linl7_,_rumiimur,133538q,13693c,139038a,1yangbubuya,1Z74OxkCVKoLyBJ,222lala888,2bisiri,36fxiaojiejie,44comb,4RnTclnLDKk9H7F,59zoziz,666cxiaoiiu,6bi3t2,77BANNDAGE,77sunnyx,7i568856,85697d,91anwan,91rouroujian,91xiaoniuniu,99xiao0214wen,9iookii,9pico,9toyota9",
     "user_lst_info": "填入要下载的用户名(@后面的字符),支持多用户下载,用户名字间逗号(英文逗号,不要有空格)隔开",
 
     "cookie": "auth_token=35191cbd6a9f1f62bf431cf2fd3f9b5a89b2b0e6; ct0=5dae3625a0b4fd83d8f05e796143f562b763ce5f57f9c5d39bbb4c9ef9e0adc411b839f17cc5c5286694ab832178fb0af7a6e9c21c0a2c1e3ca78325df74e4be3b948f87334734b4906f53ae029533ac;",
