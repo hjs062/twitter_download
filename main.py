@@ -7,6 +7,7 @@ import os
 import json
 import sys
 import random
+import csv
 from urllib.parse import urlparse
 
 
@@ -431,21 +432,32 @@ def main(_user_info: object):
         cache_data = cache_gen(_user_info.save_path)
 
     if autoSync:
-        files = sorted(os.listdir(_user_info.save_path))
-        if len(files) > 0:
-            global start_time_stamp
-            re_rule = r"\d{8}_\d{6}"
-            for i in files[::-1]:
-                if "-img_" in i:
-                    start_time_stamp = time2stamp(re.findall(re_rule, i)[0]) + 1
-                    break
-                elif "-vid_" in i:
-                    start_time_stamp = time2stamp(re.findall(re_rule, i)[0]) + 1
-                    break
-                else:
-                    start_time_stamp = backup_stamp
+        file_path = f'{_user_info.save_path}/{_user_info.screen_name}.csv'
+        if os.path.exists(file_path):
+            with open(file_path, "r", encoding="utf-8") as f:
+                reader = csv.reader(f)
+
+                # 앞의 메타데이터 2줄은 건너뛰기(csv_gen.__init__ 에서 메타데이터 2줄을 썼기때문)
+                for _ in range(2):
+                    try:
+                        next(reader)
+                    except StopIteration:
+                        print(".csv 파일에서 앞 2줄을 건너뛰려고했지만, 실패했습니다. 아마도 새파일이어서 그랬을 겁니다.")
+                        break
+
+                global start_time_stamp
+                time_stamp_newest = backup_stamp
+                re_rule = r"\d{8}_\d{6}"
+                for row in reader:
+                    #print(row)
+                    time_stamp = time2stamp(row[0])
+                    if time_stamp > time_stamp_newest:
+                        time_stamp_newest = time_stamp
+
+                start_time_stamp = time_stamp_newest + 1
+                print(time_stamp_newest)
         else:
-            start_time_stamp = backup_stamp
+            print("autoSync 가 true 로 설정되었지만 .csv 파일이 존재하지 않아 start_time_stamp 는 " + backup_stamp + "로 설정됩니다.")
 
     download_control(_user_info)
 

@@ -1,20 +1,23 @@
 import csv
 import time
+import os
 from datetime import datetime
 
 class csv_gen():
     def __init__(self, save_path:str, user_name, screen_name, tweet_range) -> None:
-        self.f = open(f'{save_path}/{screen_name}-{datetime.now().strftime("%Y-%m-%d_%H-%M-%S")}.csv', 'w', encoding='utf-8-sig', newline='')
-        self.writer = csv.writer(self.f)
-
-        #初始化
-        self.writer.writerow([user_name, screen_name])
-        self.writer.writerow(['Tweet Range : ' + tweet_range])
-        self.writer.writerow(['Save Path : ' + save_path])
-        main_par = ['Tweet Date', 'Display Name', 'User Name', 'Tweet URL', 'Media Type', 'Media URL', 'Saved Filename', 'Tweet Content', 'Favorite Count', 
+        file_path = f'{save_path}/{screen_name}.csv'
+        if os.path.exists(file_path):
+            self.f = open(f'{save_path}/{screen_name}.csv', 'a', encoding='utf-8-sig', newline='')
+            self.writer = csv.writer(self.f)
+        else:
+            self.f = open(f'{save_path}/{screen_name}.csv', 'a', encoding='utf-8-sig', newline='')
+            self.writer = csv.writer(self.f)
+            self.writer.writerow([user_name, screen_name])
+            #self.writer.writerow(['Tweet Range : ' + tweet_range])
+            #self.writer.writerow(['Save Path : ' + save_path])
+            main_par = ['Tweet Date', 'Display Name', 'User Name', 'Tweet URL', 'Media Type', 'Media URL', 'Saved Filename', 'Tweet Content', 'Favorite Count', 
                     'Retweet Count', 'Reply Count']
-        self.writer.writerow(main_par)
-
+            self.writer.writerow(main_par)
         pass
 
     def csv_close(self):
