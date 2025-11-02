@@ -376,8 +376,8 @@ def download_control(_user_info):
                     csv_file.data_input(csv_info)
 
                     if log_output:
-                        t = time.strftime('%Y-%m-%dT%H:%M:%S')
-                        print(f'{t} : {_file_name}=====>下载完成')
+                        t = time.strftime('%Y%m%d_%H%M%S')
+                        print(f'{t} : {_file_name}')
 
                     break
                 except Exception as e:
